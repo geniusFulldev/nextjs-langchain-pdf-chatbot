@@ -14,9 +14,9 @@ export default function ChatLayout({
                 <div className="flex-grow h-full">
                     <div className="relative w-full h-full flex flex-col">
                         <Header />
-                        <div className="flex-grow">
+                        <main className="flex-grow p-2 md:p-6 lg:p-8">
                             {children}
-                        </div>
+                        </main>
                     </div>
                 </div>
             </div>
