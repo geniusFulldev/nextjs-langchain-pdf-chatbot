@@ -1,8 +1,10 @@
 import "../styles/index.css";
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import classnames from 'classnames';
 import { ThemeProviders } from '@/components/theme-providers';
+import { NextAuthProvider } from "./SessionProvider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={classnames("dark:bg-black", inter.className) }>
         <ThemeProviders>
+          <NextAuthProvider>
           {children}
+          </NextAuthProvider>
         </ThemeProviders>
       </body>
     </html>

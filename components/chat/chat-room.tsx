@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-// import { convMockData } from 'data/convMockData';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 // import { sendChatMessage } from '@lib/Client/chat';
 // import BouncingDotsLoader from './BouncingDotsLoader';

@@ -5,6 +5,7 @@ import { pinecone } from './pinecone-client';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 
+/*  For starter, please don't specify this env variable */
 const PINECONE_NAME_SPACE = process.env.PINECONE_NAME_SPACE || "";
 
 export function getIndexName(userId: string) {
@@ -72,7 +73,7 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
 
     // Delete all vectors
     // if( index.)
-    await index.delete1({deleteAll: true, namespace: PINECONE_NAME_SPACE});
+    // await index.delete1({deleteAll: true, namespace: PINECONE_NAME_SPACE});
 
     //embed the PDF documents
     await PineconeStore.fromDocuments(docs, embeddings, {

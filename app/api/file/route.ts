@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises'
 import fs from "fs";
 import { createEmbeddingData } from '@/lib/server/embeddings';
+import { getServerSession } from 'next-auth';
+import AppAuthOptions from '@/lib/server/auth/auth-options';
 
 export const config = {
   api: {
@@ -12,9 +14,16 @@ export const config = {
 
 export async function POST(req: NextRequest) {
     try {
-        debugger;
-        const userId = '630a5a4569679590acae13e6';
+        const session = await getServerSession(AppAuthOptions);
+        if( !session ) {
+            return NextResponse.json({
+                success: false,
+                message: "Unauthorized!"
+            });
+        }
+
         /* Uploading pdf file */        
+        const userId = session.user.id;
         const data = await req.formData();
         const file: File | null = data.get('file') as unknown as File
     
@@ -49,7 +58,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: false,
             message: error.toString()
-        })
+        });
     }
 }
 

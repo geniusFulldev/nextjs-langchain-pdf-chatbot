@@ -1,6 +1,7 @@
 'use client'
 
-import React, {useState, ChangeEvent, FormEvent} from 'react';
+import React, {useState, ChangeEvent} from 'react';
+import Button from '@/components/ui/button';
 
 const UploadForm = () => {
     const [ file, setFile] = useState<File | null>(null);
@@ -66,13 +67,13 @@ const UploadForm = () => {
                 />
             </div>        
             <div className="flex justify-center">
-              <button 
-                className="flex w-full items-center justify-center rounded-md bg-primary py-3 px-5 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
-                disabled={loading}
+              <Button
+                className='w-full'
+                loading={loading}
                 onClick={ onUploadFile }
               >
                 Process
-              </button>                
+            </Button>
             </div>
         </>
     )
