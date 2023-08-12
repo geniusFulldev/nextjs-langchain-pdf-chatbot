@@ -1,3 +1,4 @@
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import "../styles/index.css";
 
 import type { Metadata } from 'next';

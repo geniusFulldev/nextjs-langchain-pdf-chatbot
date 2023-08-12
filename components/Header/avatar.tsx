@@ -23,7 +23,7 @@ const Avatar = () => {
                         </div>        
                         <div className="text-left font-medium">
                             <div>{session.user.name}</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">{session.user.email}</div>                                    
+                            {/* <div className="text-sm text-gray-500 dark:text-gray-400">{session.user.email}</div>                                     */}
                         </div>
                     </div>
                 </Menu.Button>

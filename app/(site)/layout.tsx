@@ -23,7 +23,7 @@ export default async function ChatLayout({
                 <div className="h-[calc(100%-60px)]">
                     <div className="relative w-full h-full flex">
                         <SideBar />        
-                        <main className="relative flex-grow">
+                        <main className="relative w-[cal(100%-240px)] lg:w-[calc(100%-280px)]">
                             {children}
                             <MainBackground />
                         </main>

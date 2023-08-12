@@ -15,12 +15,54 @@ const mockMessages: Message[] = [
     },
     {
         type: 'bot',
-        text: 'Hello, How can I help you?'
-    }
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },
+    {
+        type: 'user',
+        text: 'Hi'
+    },
+    {
+        type: 'bot',
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },    {
+        type: 'user',
+        text: 'Hi'
+    },
+    {
+        type: 'bot',
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },    {
+        type: 'user',
+        text: 'Hi'
+    },
+    {
+        type: 'bot',
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },    {
+        type: 'user',
+        text: 'Hi'
+    },
+    {
+        type: 'bot',
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },    {
+        type: 'user',
+        text: 'Hi'
+    },
+    {
+        type: 'bot',
+        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
+        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
+    },
 ];
 
 const ChatRoom = () => {
-    const [messages, setMessages] = useState<Message[]>(mockMessages);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const scrollRef = useRef<HTMLElement>();
 
@@ -34,7 +76,7 @@ const ChatRoom = () => {
         }
     }
 
-    const handleSubmit = (textInput: string) => {
+    const handleSubmit = async(textInput: string) => {
         if( loading ) {
             return;
         }
@@ -50,30 +92,44 @@ const ChatRoom = () => {
             return arr;
         });
         
-        // sendChatMessage(textInput).then(ret => {
-        //     const answer = {
-        //         id: messages.length,
-        //         chat: [ret],
-        //         date:Date.now()
-        //     };
-        //     setMessages((prev: any) => {
-        //         const arr = JSON.parse(JSON.stringify(prev));
-        //         arr.push(answer);
-        //         return arr;
-        //     });
-        // }).catch(err => {
-        //     console.log('chat error =>', err);
-        //     alertError('Error', err);
-        // }).finally(() => {
-        //     setLoading(false);
-        // });
+        try {
+            const params = {
+                message: textInput
+            };
 
+            const ret = await fetch('/api/chat', {
+                method: 'POST',
+                body: JSON.stringify(params)
+            });
+
+            const data = await ret.json();
+            if( data.success ) {
+                const botMessage: Message = {
+                    type: 'bot',
+                    text: data.response
+                }
+                setMessages((prev: Message[]) => {
+                    const arr = JSON.parse(JSON.stringify(prev));
+                    arr.push(botMessage);
+                    return arr;                    
+                })
+            }
+            else {
+                console.log("Failed to send chat =>", data.message );
+            }
+        }
+        catch(error: any) {
+            console.log("Failed to send chat =>", error.toString());
+        }
+        finally {
+            setLoading(false);
+        }
 
     }
 
     return (
-        <div className='flex-grow pt-8'>
-            <div className='h-[calc(100%-80px)] pb-4'>
+        <div className='h-full pt-8'>
+            <div className='h-[calc(100%-72px)] pb-4'>
                 <PerfectScrollbar 
                     containerRef={(ref) => scrollRef.current = ref}
                     options={{ suppressScrollX: true, wheelPropagation: false}}

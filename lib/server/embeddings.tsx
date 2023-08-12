@@ -55,11 +55,6 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
         await pinecone.describeIndex({
             indexName
         });
-        // For starter
-        // await pinecone.deleteIndex({
-        //     indexName
-        // });
-        // await createIndex(userId);
     }
     catch(err) {
         await createIndex(userId);
@@ -69,7 +64,7 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
     /*create and store the embeddings in the vectorStore*/
 
     const embeddings = new OpenAIEmbeddings();
-    const index = pinecone.Index(indexName); //change to your own index name
+    const index = pinecone.Index(indexName);
 
     // Delete all vectors
     // if( index.)
@@ -86,3 +81,18 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
     throw new Error('Failed to ingest your data');
   }
 };
+
+export async function deleteVectors(userId: string) {
+    const indexName = getIndexName(userId);
+    try {
+        await pinecone.describeIndex({
+            indexName
+        });
+        const index = pinecone.Index(indexName);
+        await index.delete1({deleteAll: true, namespace: PINECONE_NAME_SPACE});
+    }
+    catch(err) {
+        await createIndex(userId);
+    }
+
+}

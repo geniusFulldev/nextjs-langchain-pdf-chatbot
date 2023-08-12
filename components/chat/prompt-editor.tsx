@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'; 
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import LoadingDots from "../ui/loading-dots";
 
 interface PromptEditorProps {
     handleSubmit: (value: string) => void;
@@ -35,7 +36,7 @@ const PromptEditor: React.FC<PromptEditorProps> = ({
     }
 
     return (
-        <div className="relative my-3">
+        <div className="relative mt-3">
             <textarea
                 disabled={loading}
                 onKeyDown={(e) => {
@@ -60,7 +61,11 @@ const PromptEditor: React.FC<PromptEditorProps> = ({
                 className="absolute right-3 top-4 w-7 h-7 rounded-full text-pink-400 hover:text-pink-600"
                 disabled={loading}
             >
+            { loading? (
+                <LoadingDots />
+            ):(
                 <FontAwesomeIcon icon={faPaperPlane} className="w-full h-full"/>
+            )}    
             </button>
         </div>
     );

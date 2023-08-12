@@ -16,7 +16,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({
 
     return (
         <div 
-            className={classnames("relative my-4 rounded-md border-slate-400 px-6 py-4 flex gap-3",
+            className={classnames("relative my-4 rounded-md border-slate-400 px-6 py-4 flex",
                 {"bg-slate-200 dark:bg-slate-500": message.type === 'user'},
                 {"bg-gray-200 dark:bg-gray-500": message.type === 'bot'}
             )}
@@ -28,7 +28,9 @@ const MessageBox: React.FC<MessageBoxProps> = ({
                 <FontAwesomeIcon icon={faUser} className="w-full h-full text-sky-300"/>
             )}
             </div>
-            {message.text}
+            <div className="w-[calc(100%-32px)] ms-2">
+                <p className="whitespace-break-spaces">{message.text}</p>
+            </div>
         </div>
     )
 }

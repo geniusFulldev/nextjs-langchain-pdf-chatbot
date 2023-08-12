@@ -8,6 +8,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import { signIn} from 'next-auth/react';
 import Button from "@/components/ui/button";
 import { useState } from "react";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const schema = yup
   .object({
@@ -21,6 +23,7 @@ const schema = yup
   .required();
 
 const SignupPage = () => {
+    const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
     const {
         formState: { errors, isDirty, isValid, isSubmitting },
@@ -56,6 +59,7 @@ const SignupPage = () => {
         }
         else {
             const retSignin = await signIn("credentials", {
+                redirect: false,
                 email: value.email,
                 password: value.password
             });
@@ -68,6 +72,9 @@ const SignupPage = () => {
                     });
                     reset();
         
+                }
+                else {
+                    router.replace('/');
                 }
             }
         
