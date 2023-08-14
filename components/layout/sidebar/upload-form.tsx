@@ -2,19 +2,18 @@
 
 import React, {useState, ChangeEvent, useEffect} from 'react';
 import Button from '@/components/ui/button';
+import { usePdfProvider } from '@/lib/client/context/pdf-context';
 
 const UploadForm = () => {
     const [ file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
-
-    const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+    const { uploadedPdfFiles: uploadedFiles, setUploadedPdfFiles: setUploadedFiles} = usePdfProvider();
 
     const getUploadedFiles = async() => {
         try {
             const response = await fetch('/api/file');
             const data = await response.json();
-            debugger;
             if( data.success && data.files ) {
                 setUploadedFiles(data.files);
             }
@@ -68,6 +67,7 @@ const UploadForm = () => {
             }
             finally {
                 setLoading(false);
+                setFile(null);
             }
             
         }
@@ -119,7 +119,7 @@ const UploadForm = () => {
                         loading={loading}
                         onClick={ onUploadFile }
                     >
-                        Process
+                        Upload
                     </Button>
                 </div>
             </>

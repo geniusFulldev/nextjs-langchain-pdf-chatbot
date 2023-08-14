@@ -46,7 +46,6 @@ const SigninPage = () => {
                 email: value.email,
                 password: value.password
             });
-            debugger;
             if (retSignin) {
                 const { error } = retSignin;
                 if( error ) {
@@ -64,7 +63,6 @@ const SigninPage = () => {
             
             reset();
         } catch (error) {
-            debugger;
             setError('signIn', {
                 type: 'api',
                 message: 'Unknown error. try again later',

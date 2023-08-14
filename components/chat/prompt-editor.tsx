@@ -8,10 +8,12 @@ import LoadingDots from "../ui/loading-dots";
 interface PromptEditorProps {
     handleSubmit: (value: string) => void;
     loading: boolean;
+    disabled: boolean
 }
 const PromptEditor: React.FC<PromptEditorProps> = ({ 
     handleSubmit,
-    loading=false
+    loading=false,
+    disabled=false
 }) => {
     const [textInput, setTextInput] = useState<string>("");
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -38,7 +40,7 @@ const PromptEditor: React.FC<PromptEditorProps> = ({
     return (
         <div className="relative mt-3">
             <textarea
-                disabled={loading}
+                disabled={loading || disabled}
                 onKeyDown={(e) => {
                     e.code === "Enter" && onTextSubmit(e);
                   }}
@@ -59,7 +61,7 @@ const PromptEditor: React.FC<PromptEditorProps> = ({
             />
             <button 
                 className="absolute right-3 top-4 w-7 h-7 rounded-full text-pink-400 hover:text-pink-600"
-                disabled={loading}
+                disabled={loading || disabled}
             >
             { loading? (
                 <LoadingDots />

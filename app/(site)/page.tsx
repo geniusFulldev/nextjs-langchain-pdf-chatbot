@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import ChatRoom from '@/components/chat/chat-room'
 
 export default function Home() {

@@ -4,6 +4,7 @@ import MainBackground from "@/components/background/main-background";
 import { getServerSession } from "next-auth/next";
 import AppAuthOptions from "@/lib/server/auth/auth-options";
 import { redirect } from "next/navigation";
+import PdfProvider from "@/lib/client/context/pdf-context";
 
 export default async function ChatLayout({
     children
@@ -22,11 +23,13 @@ export default async function ChatLayout({
                 <Header/>
                 <div className="h-[calc(100%-60px)]">
                     <div className="relative w-full h-full flex">
-                        <SideBar />        
-                        <main className="relative w-[cal(100%-240px)] lg:w-[calc(100%-280px)]">
-                            {children}
-                            <MainBackground />
-                        </main>
+                        <PdfProvider>
+                            <SideBar />        
+                            <main className="relative w-[cal(100%-240px)] lg:w-[calc(100%-280px)]">
+                                {children}
+                                <MainBackground />
+                            </main>
+                        </PdfProvider>
                     </div>
                 </div>
             </div>

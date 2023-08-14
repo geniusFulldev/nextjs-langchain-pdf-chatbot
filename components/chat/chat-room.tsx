@@ -7,65 +7,14 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Message } from '@/types/chat';
 import MessageBox from './message-box';
 import PromptEditor from './prompt-editor';
-
-const mockMessages: Message[] = [
-    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },
-    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },    {
-        type: 'user',
-        text: 'Hi'
-    },
-    {
-        type: 'bot',
-        text: `Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ChatHistory'
-        Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'ChatHistory' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;`
-    },
-];
+import { usePdfProvider } from '@/lib/client/context/pdf-context';
 
 const ChatRoom = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const scrollRef = useRef<HTMLElement>();
-
+    const { uploadedPdfFiles } = usePdfProvider();
+    
     useEffect(() => {
         forceScrollBottom();
     }, [messages])
@@ -130,23 +79,26 @@ const ChatRoom = () => {
     return (
         <div className='h-full pt-8'>
             <div className='h-[calc(100%-72px)] pb-4'>
-                <PerfectScrollbar 
-                    containerRef={(ref) => scrollRef.current = ref}
-                    options={{ suppressScrollX: true, wheelPropagation: false}}
-                >
-                    {messages.map((item, idx) => 
-                        <MessageBox message={item} key={`message-${idx}`}/>
-                    )}
+                { uploadedPdfFiles.length > 0? (
+                    <PerfectScrollbar 
+                        containerRef={(ref) => scrollRef.current = ref}
+                        options={{ suppressScrollX: true, wheelPropagation: false}}
+                    >
+                        {messages.map((item, idx) => 
+                            <MessageBox message={item} key={`message-${idx}`}/>
+                        )}
 
-                </PerfectScrollbar>
-                {/* { loading && (
-                    <BouncingDotsLoader />
-                )} */}
-                
+                    </PerfectScrollbar>
+                ):(
+                    <div className='h-full flex items-center justify-center'>
+                        <p>You don't have any pdf files uploaded.  Please upload pdf files on the left side bar.</p>
+                    </div>
+                )}
             </div>
             <PromptEditor 
-                loading={loading}
                 handleSubmit={handleSubmit} 
+                loading={loading}
+                disabled={uploadedPdfFiles.length==0}
             />
         </div>
     );
