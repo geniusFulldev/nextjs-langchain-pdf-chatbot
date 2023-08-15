@@ -26,15 +26,12 @@ export async function POST(req: NextRequest) {
         /* Uploading pdf file */        
         const userId = session.user.id;
         const data = await req.formData();
-        const file: File | null = data.get('file') as unknown as File
-    
-        if (!file) {
-            return NextResponse.json({ success: false })
+        const formDataEntryValues = Array.from(data.getAll('file'))
+
+        if(formDataEntryValues.length == 0 ) {
+            return NextResponse.json({ success: false });
         }
-    
-        const bytes = await file.arrayBuffer()
-        const buffer = Buffer.from(bytes)
-        
+
         if(!fs.existsSync('./public/docs')) {
             await mkdir('./public/docs');
         }
@@ -43,12 +40,18 @@ export async function POST(req: NextRequest) {
         if( !fs.existsSync(uploadDir)) {
             await mkdir(uploadDir);
         }
-        
 
-        const path = `${uploadDir}/${file.name}`
-        await writeFile(path, buffer)
-        console.log(`open ${path} to see the uploaded file`)
-    
+        for(const formDataEntryValue  of formDataEntryValues ) {
+            if (typeof formDataEntryValue === "object" && "arrayBuffer" in formDataEntryValue) {
+                const file = formDataEntryValue as unknown as Blob;
+                const bytes = await file.arrayBuffer()
+                const buffer = Buffer.from(bytes)
+        
+                const path = `${uploadDir}/${file.name}`
+                await writeFile(path, buffer)
+                console.log(`open ${path} to see the uploaded file`)
+            }
+        }
         /* Create embedding data and save them to pinecone */
         await createEmbeddingData(userId, uploadDir);
 

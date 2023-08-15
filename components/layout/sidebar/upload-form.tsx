@@ -5,7 +5,7 @@ import Button from '@/components/ui/button';
 import { usePdfProvider } from '@/lib/client/context/pdf-context';
 
 const UploadForm = () => {
-    const [ file, setFile] = useState<File | null>(null);
+    const [ files, setFiles] = useState<File[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const { uploadedPdfFiles: uploadedFiles, setUploadedPdfFiles: setUploadedFiles} = usePdfProvider();
@@ -33,16 +33,17 @@ const UploadForm = () => {
 
     const onChangeFileInput = (event: ChangeEvent<HTMLInputElement>) => {
         if( event.target.files && event.target.files.length > 0 ) {
-            setFile(event.target.files[0])
+            setFiles([...event.target.files])
         }
     }
 
     const onUploadFile = async(e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         
-        if( file ) {
+        if( files.length > 0 ) {
             const body = new FormData();
-            body.append("file", file);
+            // body.append("files", file);
+            files.forEach(file => body.append("file", file));
             setLoading(true);
             try {
                 const response = await fetch("/api/file", {
@@ -59,7 +60,8 @@ const UploadForm = () => {
                 }
                 
                 setUploadSuccess(data.success);
-                setUploadedFiles([file.name]);
+                // setUploadedFiles([file.name]);
+                 setUploadedFiles(files.map(file => file.name));
             }
             catch(error: any) {
                 console.log('onUploadFile error =>', error);
@@ -67,7 +69,7 @@ const UploadForm = () => {
             }
             finally {
                 setLoading(false);
-                setFile(null);
+                setFiles([]);
             }
             
         }
@@ -111,6 +113,7 @@ const UploadForm = () => {
                         accept='.pdf'
                         size={2048}
                         onChange={onChangeFileInput}
+                        multiple
                     />
                 </div>        
                 <div className="flex justify-center">
