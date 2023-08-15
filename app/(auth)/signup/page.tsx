@@ -8,7 +8,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import { signIn} from 'next-auth/react';
 import Button from "@/components/ui/button";
 import { useState } from "react";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const schema = yup

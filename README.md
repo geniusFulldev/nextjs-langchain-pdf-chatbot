@@ -64,7 +64,7 @@ NEXTAUTH_SECRET=
 
 5. In lib/server/makechain.ts chain change the QA_PROMPT for your own usecase. Change modelName in new OpenAI to gpt-4, if you have access to gpt-4 api. 
 
-6. In the Starter(free) plan, you can delete saved vectors in an index.
+6. In the Starter(free) plan, you cannot delete saved vectors in an index.
  In non-starter plan, you should open these lines
  * line 71 in lib/server/embeddings
  * line 115 in app/api/file/route.ts
