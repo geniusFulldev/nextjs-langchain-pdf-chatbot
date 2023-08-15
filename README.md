@@ -21,7 +21,7 @@ An open-source AI chatbot to chat with multiple PDF files.
 
 - [Next.js 13](https://nextjs.org) App Router
 - Typescript as a language
-- Tailwind CSS as a CSS framework
+- Tailwind CSS as a CSS framework, with light and dark themes
 - [NextAuth.js](https://github.com/nextauthjs/next-auth) for authentication
 - Powered by [LangChain](https://docs.langchain.com/docs/) 
 - OpenAI gpt-3.5-turbo as a language model (You can change it to gpt-4 if you have access to it)
