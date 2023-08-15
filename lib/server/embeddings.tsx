@@ -66,8 +66,8 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
     const embeddings = new OpenAIEmbeddings();
     const index = pinecone.Index(indexName);
 
-    // Delete all vectors
-    // if( index.)
+    /* Delete all vectors */
+    /* This is not working for starter enviroment */
     // await index.delete1({deleteAll: true, namespace: PINECONE_NAME_SPACE});
 
     //embed the PDF documents

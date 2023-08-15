@@ -111,6 +111,7 @@ export async function DELETE() {
         fs.rmSync(uploadDir, { recursive: true, force: true });
 
         /* Delete all vectors */
+        /* This is not working for starter enviroment */
         // await deleteVectors(userId);
 
         return NextResponse.json({
