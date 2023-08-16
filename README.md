@@ -1,5 +1,5 @@
 <img src="https://github.com/geniusFulldev/nextjs-langchain-pdf-chatbot/blob/main/public/images/screenshots/1.png?raw=true" alt="OG Image">
-<h1 align="center">Next.js PDF ChatBot</h1>
+<h1 align="center">PDF ChatBot powered by Next.js, LangChain, and GPT4</h1>
 
 <p align="center">
   An open-source AI chatbot to chat with multiple PDF files.
