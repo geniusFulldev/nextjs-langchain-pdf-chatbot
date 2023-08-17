@@ -1,4 +1,5 @@
 import Avatar from "./avatar";
+import ShowSidebar from "./show-sidebar";
 import ThemeToggler from "./theme-toggler";
 
 export default function Header() {
@@ -8,6 +9,7 @@ export default function Header() {
             <h5>PDF Chat</h5>
             <div className="flex items-center space-x-4">
                 <Avatar />
+                <ShowSidebar />
                 <ThemeToggler />
             </div>
         </div>

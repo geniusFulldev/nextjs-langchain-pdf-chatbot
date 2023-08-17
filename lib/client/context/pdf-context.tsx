@@ -28,6 +28,5 @@ const PdfProvider = ({children}: {children: React.ReactNode}) => {
     );
 }
 
-
 export const usePdfProvider = () => useContext(PdfContext);
 export default PdfProvider;

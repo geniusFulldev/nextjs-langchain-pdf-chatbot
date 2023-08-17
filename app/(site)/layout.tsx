@@ -1,10 +1,8 @@
 import Header from "@/components/Header";
-import SideBar from "@/components/layout/sidebar";
-import MainBackground from "@/components/background/main-background";
 import { getServerSession } from "next-auth/next";
 import AppAuthOptions from "@/lib/server/auth/auth-options";
 import { redirect } from "next/navigation";
-import PdfProvider from "@/lib/client/context/pdf-context";
+import LayoutProvider from "@/lib/client/context/layout-provider";
 
 export default async function ChatLayout({
     children
@@ -20,18 +18,12 @@ export default async function ChatLayout({
     return (
         <div className="4xl:container">
             <div className="h-screen">
-                <Header/>
-                <div className="h-[calc(100%-60px)]">
-                    <div className="relative w-full h-full flex">
-                        <PdfProvider>
-                            <SideBar />        
-                            <main className="relative w-[cal(100%-240px)] lg:w-[calc(100%-280px)]">
-                                {children}
-                                <MainBackground />
-                            </main>
-                        </PdfProvider>
-                    </div>
-                </div>
+                <LayoutProvider>
+                    <Header/>
+                    <main className="relative h-[calc(100%-60px)]">
+                        { children }
+                    </main>
+                </LayoutProvider>
             </div>
         </div>
     )
