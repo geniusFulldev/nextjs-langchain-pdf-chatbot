@@ -91,7 +91,7 @@ const ChatRoom = () => {
                     </PerfectScrollbar>
                 ):(
                     <div className='h-full flex items-center justify-center'>
-                        <p>You don't have any pdf files uploaded.  Please upload pdf files on the left side bar.</p>
+                        <p>{`You don't have any pdf files uploaded.  Please upload pdf files on the left side bar.`}</p>
                     </div>
                 )}
             </div>

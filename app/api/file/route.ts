@@ -7,11 +7,11 @@ import { getServerSession } from 'next-auth';
 import AppAuthOptions from '@/lib/server/auth/auth-options';
 import { getFiles } from '@/lib/server/utils';
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+// export const config = {
+//   api: {
+//     bodyParser: false
+//   }
+// };
 
 export async function POST(req: NextRequest) {
     try {
