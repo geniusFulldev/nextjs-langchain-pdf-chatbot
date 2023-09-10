@@ -37,7 +37,6 @@ export async function createEmbeddingData(userId: string, pdfDir: string){
       '.pdf': (path) => new PDFLoader(path),
     });
 
-    // const loader = new PDFLoader(filePath);
     const rawDocs = await directoryLoader.load();
 
     /* Split text into chunks */

@@ -22,7 +22,6 @@ const UploadForm = () => {
             }
         }
         catch(error: any) {
-            console.log('getUploadedFiles error =>', error);
             setUploadedFiles([]);
         }
     }
@@ -87,7 +86,7 @@ const UploadForm = () => {
             }
         }
         catch(error: any) {
-            console.log('getUploadedFiles error =>', error);
+            console.log('onDeleteUploadedFiles error =>', error);
         }
         finally {
             setLoading(false);
